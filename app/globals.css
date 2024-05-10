@@ -1,0 +1,19 @@
+::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Colours Used
+Timer: tomato
+Heading: black
+Background: white
+Buttons: Green, Red
+*/
