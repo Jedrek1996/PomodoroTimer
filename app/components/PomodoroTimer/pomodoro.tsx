@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Box, Flex, Heading, Text } from "@chakra-ui/react";
+import { Box, Flex, Text } from "@chakra-ui/react";
 import { AppStore } from "../../GlobalRedux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { TimerState } from "../../GlobalRedux/Features/timerSlice";
@@ -17,6 +17,11 @@ import {
 } from "../../GlobalRedux/Features/timerSlice";
 import "./pomodoro.css";
 import PomodoroButtons from "./pomdoroButtons";
+import PomdoroGraph from "./pomdoroGraph";
+import PomodoroTimerDisplay from "./pomdoroTimer";
+import PomodoroHeading from "./pomdoroHeading";
+import PomdoroCycles from "./pomodoroCycles";
+import { TIMER_CONSTANTS } from "../../constants/constants";
 
 const PomodoroTimer: React.FC<TimerState> = () => {
   let intervalId: NodeJS.Timeout;
@@ -29,23 +34,7 @@ const PomodoroTimer: React.FC<TimerState> = () => {
   );
   const [localTimer, setLocalTimer] = useState<number>(timer);
 
-  console.log("isRunning✨✨" + isRunning);
-  console.log("isBreak🍇 " + isBreak);
-  console.log("Timer: " + timer);
-
-  useEffect(() => {
-    setLocalTimer(timer);
-    if (isBreak && timer >= breakTimer) {
-      dispatch(endBreak());
-      dispatch(startTimer());
-    }
-
-    if (isRunning && timer >= standardTimer) {
-      dispatch(endTimer());
-      dispatch(startBreak());
-    }
-  }, [timer]);
-
+  // Calling dispatch tick to increament
   useEffect(() => {
     if (isRunning) {
       intervalId = setInterval(() => {
@@ -58,6 +47,19 @@ const PomodoroTimer: React.FC<TimerState> = () => {
     };
   }, [isRunning, isBreak, dispatch]);
 
+  //Set actions after timer ends
+  useEffect(() => {
+    setLocalTimer(timer);
+    if (isBreak && timer >= breakTimer) {
+      dispatch(endBreak());
+      dispatch(startTimer());
+    } else if (isRunning && timer >= standardTimer) {
+      dispatch(endTimer());
+      dispatch(startBreak());
+    }
+  }, [timer]);
+
+  // Dispatch actions depending on current timer, pause and resume.
   const handleStartPause = (): void => {
     let action;
     if (isRunning) {
@@ -72,11 +74,13 @@ const PomodoroTimer: React.FC<TimerState> = () => {
     dispatch(action);
   };
 
+  //Reset logic
   const handleReset = (): void => {
     dispatch(resetTimer());
     setLocalTimer(timer);
   };
 
+  //Graph logic
   let remainingPercentage: number;
 
   if (isRunning || isBreak) {
@@ -92,60 +96,18 @@ const PomodoroTimer: React.FC<TimerState> = () => {
 
   return (
     <Box className="pomodoroContainer">
-      <Heading
-        color={"grey"}
-        fontWeight={"thin"}
-        textTransform={"uppercase"}
-        fontSize={"2.7rem"}
-      >
-        Pomodoro Timer
-      </Heading>
-
-      <Box
-        backgroundColor="#ccc"
-        height="20px"
-        width="100%"
-        borderRadius="10px"
-      >
-        <Box
-          backgroundColor="tomato"
-          height="100%"
-          width={`${remainingPercentage}%`}
-          borderRadius="10px"
-        ></Box>
-      </Box>
+      <PomodoroHeading />
+      <PomdoroGraph percentage={remainingPercentage} />
 
       <Flex flexDirection={"column"}>
-        <Text
-          fontSize={["1rem", "1.5rem", "2rem", "2.5rem", "3rem", "10rem"]}
-          fontWeight="bold"
-          color="tomato"
-          marginBottom={"12.5rem"}
-          marginTop={"2rem"}
-          height={"4rem"}
-        >
-          {Math.floor(localTimer / 60)}:{localTimer % 60 < 10 ? "0" : ""}
-          {localTimer % 60}
-        </Text>
+        <PomodoroTimerDisplay localTimer={localTimer} />
 
-        <Flex
-          align={"center"}
-          justify={"center"}
-          justifyContent={"space-between"}
-          margin={"0 auto"}
-          width={"12rem"}
-        >
-          <PomodoroButtons
-            isRunning={isRunning}
-            isBreak={isBreak}
-            handleStartPause={handleStartPause}
-            handleReset={handleReset}
-          />
-        </Flex>
-
-        <Text mt={4} color={"grey"} fontSize={"1.2rem"} margin={"1.5rem"}>
-          {isBreak ? "Break Mode" : "Work Mode"} | Completed Cycles: {cycles}
-        </Text>
+        <PomodoroButtons
+          isRunning={isRunning}
+          handleStartPause={handleStartPause}
+          handleReset={handleReset}
+        />
+        <PomdoroCycles isBreak={isBreak} cycles={cycles} />
       </Flex>
     </Box>
   );
