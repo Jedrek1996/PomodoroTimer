@@ -44,6 +44,7 @@ const PomodoroButtons: React.FC<PomodoroButtonsProps> = ({
 
       <Tooltip label="Reset" placement="top" color={"grey"}>
         <Button
+          data-testid="start-pause-button"
           onClick={handleReset}
           cursor={"pointer"}
           fontSize={"3.5rem"}

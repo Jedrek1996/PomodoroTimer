@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import { AppStore } from "../../GlobalRedux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { TimerState } from "../../GlobalRedux/Features/timerSlice";
@@ -21,7 +21,6 @@ import PomdoroGraph from "./pomdoroGraph";
 import PomodoroTimerDisplay from "./pomdoroTimer";
 import PomodoroHeading from "./pomdoroHeading";
 import PomdoroCycles from "./pomodoroCycles";
-import { TIMER_CONSTANTS } from "../../constants/constants";
 
 const PomodoroTimer: React.FC<TimerState> = () => {
   let intervalId: NodeJS.Timeout;
