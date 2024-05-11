@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState, useEffect } from "react";
 import { Box, Flex, Heading, Text } from "@chakra-ui/react";
 import { AppStore } from "../../GlobalRedux/store";
@@ -9,25 +8,42 @@ import {
   startTimer,
   pauseTimer,
   resetTimer,
+  endTimer,
   tick,
   startBreak,
+  pauseBreakTimer,
+  resumeBreakTimer,
+  endBreak,
 } from "../../GlobalRedux/Features/timerSlice";
-import "./podmoro.css";
+import "./pomodoro.css";
 import PomodoroButtons from "./pomdoroButtons";
-import toast from "react-hot-toast";
 
 const PomodoroTimer: React.FC<TimerState> = () => {
   let intervalId: NodeJS.Timeout;
+  const standardTimer: number = 60 * 25;
+  const breakTimer: number = 60 * 5;
+
   const dispatch = useDispatch();
   const { timer, isRunning, isBreak, cycles } = useSelector(
     (state: AppStore) => state.timer
   );
-  const [localTimer, setLocalTimer] = useState(timer);
+  const [localTimer, setLocalTimer] = useState<number>(timer);
+
+  console.log("isRunning✨✨" + isRunning);
+  console.log("isBreak🍇 " + isBreak);
+  console.log("Timer: " + timer);
 
   useEffect(() => {
     setLocalTimer(timer);
-    console.log(timer);
-    timer >= 60 * 25 && dispatch(startBreak());
+    if (isBreak && timer >= breakTimer) {
+      dispatch(endBreak());
+      dispatch(startTimer());
+    }
+
+    if (isRunning && timer >= standardTimer) {
+      dispatch(endTimer());
+      dispatch(startBreak());
+    }
   }, [timer]);
 
   useEffect(() => {
@@ -40,18 +56,39 @@ const PomodoroTimer: React.FC<TimerState> = () => {
     return () => {
       clearInterval(intervalId);
     };
-  }, [isRunning, dispatch]);
+  }, [isRunning, isBreak, dispatch]);
 
-  const handleStartPause = () => {
-    const action = isRunning ? pauseTimer() : startTimer();
+  const handleStartPause = (): void => {
+    let action;
+    if (isRunning) {
+      action = pauseTimer();
+    } else if (isBreak && isRunning) {
+      action = pauseBreakTimer();
+    } else if (isBreak && !isRunning) {
+      action = resumeBreakTimer();
+    } else {
+      action = startTimer();
+    }
     dispatch(action);
   };
 
-  const handleReset = () => {
+  const handleReset = (): void => {
     dispatch(resetTimer());
     setLocalTimer(timer);
-    toast.error("Timer has been resetted!");
   };
+
+  let remainingPercentage: number;
+
+  if (isRunning || isBreak) {
+    remainingPercentage = isBreak
+      ? (localTimer / breakTimer) * 100
+      : (localTimer / standardTimer) * 100;
+  } else {
+    remainingPercentage = (localTimer / standardTimer) * 100;
+    if (isBreak && localTimer === 0) {
+      dispatch(endBreak());
+    }
+  }
 
   return (
     <Box className="pomodoroContainer">
@@ -64,9 +101,23 @@ const PomodoroTimer: React.FC<TimerState> = () => {
         Pomodoro Timer
       </Heading>
 
+      <Box
+        backgroundColor="#ccc"
+        height="20px"
+        width="100%"
+        borderRadius="10px"
+      >
+        <Box
+          backgroundColor="tomato"
+          height="100%"
+          width={`${remainingPercentage}%`}
+          borderRadius="10px"
+        ></Box>
+      </Box>
+
       <Flex flexDirection={"column"}>
         <Text
-          fontSize="10rem"
+          fontSize={["1rem", "1.5rem", "2rem", "2.5rem", "3rem", "10rem"]}
           fontWeight="bold"
           color="tomato"
           marginBottom={"12.5rem"}
@@ -86,6 +137,7 @@ const PomodoroTimer: React.FC<TimerState> = () => {
         >
           <PomodoroButtons
             isRunning={isRunning}
+            isBreak={isBreak}
             handleStartPause={handleStartPause}
             handleReset={handleReset}
           />

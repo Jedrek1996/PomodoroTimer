@@ -1,9 +1,9 @@
 import { Inter } from "next/font/google";
+import { Orbitron } from "next/font/google";
 import { Providers } from "./GlobalRedux/provider";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
-const inter = Inter({ subsets: ["latin"] });
-
+const orbitron = Orbitron({ subsets: ["latin"] });
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -11,7 +11,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={orbitron.className}>
         <Providers>
           <Toaster position="top-right" />
           {children}

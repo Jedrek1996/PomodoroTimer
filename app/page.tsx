@@ -1,6 +1,6 @@
 "use client";
 import PomodoroTimer from "./components/PomodoroTimer/pomodoro";
-import { Center, Flex } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 
 export default function Home() {
   return (

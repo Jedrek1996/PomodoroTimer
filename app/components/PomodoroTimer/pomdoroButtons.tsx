@@ -5,12 +5,14 @@ import { LuTimerReset } from "react-icons/lu";
 
 interface PomodoroButtonsProps {
   isRunning: boolean;
+  isBreak: boolean;
   handleStartPause: () => void;
   handleReset: () => void;
 }
 
 const PomodoroButtons: React.FC<PomodoroButtonsProps> = ({
   isRunning,
+  isBreak,
   handleStartPause,
   handleReset,
 }) => {

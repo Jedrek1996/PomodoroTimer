@@ -2,6 +2,7 @@
   text-align: center;
   background-color: white;
   width: 50%;
+  min-width: 25%;
   height: 100%;
   border: 1px solid #c7c1c1;
   box-shadow: 10px 9px 10px rgba(196, 193, 193, 0.5);
