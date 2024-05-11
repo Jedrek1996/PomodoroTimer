@@ -11,7 +11,7 @@ export interface TimerState {
 }
 
 const initialState: TimerState = {
-  timer: 24 * 60 + 55,
+  timer: 0,
   isRunning: false,
   isBreak: false,
   cycles: 0,
@@ -27,7 +27,7 @@ export const timerSlice = createSlice({
     startTimer: (state) => {
       state.isRunning = true;
       toast.success(TIMER_CONSTANTS.START);
-      new Audio(pomodoroSuccessAlert).play();
+      // new Audio(pomodoroSuccessAlert).play();
     },
     pauseTimer: (state) => {
       state.isRunning = false;
@@ -36,24 +36,23 @@ export const timerSlice = createSlice({
     },
     resetTimer: (state) => {
       toast.error(TIMER_CONSTANTS.RESET);
-      state.timer = 24 * 60 + 55;
+      state.timer = 0;
       state.isRunning = false;
       state.isBreak = false;
     },
     endTimer: (state) => {
-      state.timer = 60 * 4 + 55;
+      state.timer = 0;
       state.isRunning = false;
     },
     tick: (state) => {
       if (state.isRunning || state.isBreak) {
         state.timer += 1;
-        console.log("Isrunngin");
       }
     },
     startBreak: (state) => {
       toast.success(TIMER_CONSTANTS.BREAK);
       state.isRunning = true;
-      state.timer = 60 * 4 + 55;
+      state.timer = 0;
       state.isBreak = true;
       state.cycles += 1;
     },
@@ -66,7 +65,7 @@ export const timerSlice = createSlice({
     },
     endBreak: (state) => {
       toast.error(TIMER_CONSTANTS.BREAK_END);
-      state.timer = 22 * 60 + 55;
+      state.timer = 0;
       state.isBreak = false;
       state.isRunning = true;
     },
