@@ -1,23 +1,28 @@
+"use client";
 import React from "react";
-import { Button, Tooltip } from "@chakra-ui/react";
+import { Button, Tooltip, Flex } from "@chakra-ui/react";
 import { IoPlayCircleOutline, IoPauseCircleOutline } from "react-icons/io5";
 import { LuTimerReset } from "react-icons/lu";
 
 interface PomodoroButtonsProps {
   isRunning: boolean;
-  isBreak: boolean;
   handleStartPause: () => void;
   handleReset: () => void;
 }
 
 const PomodoroButtons: React.FC<PomodoroButtonsProps> = ({
   isRunning,
-  isBreak,
   handleStartPause,
   handleReset,
 }) => {
   return (
-    <>
+    <Flex
+      align={"center"}
+      justify={"center"}
+      justifyContent={"space-between"}
+      margin={"0 auto"}
+      width={"12rem"}
+    >
       <Tooltip
         label={isRunning ? "Pause" : "Play"}
         placement="top"
@@ -52,7 +57,7 @@ const PomodoroButtons: React.FC<PomodoroButtonsProps> = ({
           <LuTimerReset />
         </Button>
       </Tooltip>
-    </>
+    </Flex>
   );
 };
 
