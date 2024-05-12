@@ -10,7 +10,7 @@ const PomodoroHeading: React.FC = () => {
       color={"grey"}
       fontWeight={"thin"}
       textTransform={"uppercase"}
-      fontSize={"2rem"}
+      style={{ userSelect: "none", pointerEvents: "none" }}
     >
       {TIMER_CONSTANTS.HEADER}
     </Heading>

@@ -16,12 +16,12 @@ const PomodoroTimerDisplay: React.FC<PomodoroTimerDisplayProps> = ({
   return (
     <Box
       className="custom-pomTimer"
-      // fontSize={["1rem", "1.5rem", "2rem", "2.5rem", "3rem", "10rem"]}
       fontWeight="bold"
       color="tomato"
       marginBottom={"12.5rem"}
       marginTop={"2rem"}
       height={"4rem"}
+      style={{ userSelect: "none", pointerEvents: "none" }}
     >
       {minutes}:{seconds < 10 ? "0" : ""}
       {seconds}

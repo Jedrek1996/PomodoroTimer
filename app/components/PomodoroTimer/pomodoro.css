@@ -8,10 +8,32 @@
   box-shadow: 10px 9px 10px rgba(196, 193, 193, 0.5);
   border-radius: 5%;
 }
+
+@media (max-width: 800px) {
+  .pomodoroContainer {
+    text-align: center;
+    background-color: #fff;
+    width: 100%;
+    min-width: unset;
+    height: 100%;
+    border: unset;
+    box-shadow: unset;
+    border-radius: 5%;
+  }
+}
+
+.custom-pomHeader {
+  font-size: 2rem !important;
+}
+
 @media (max-width: 800px) {
   .custom-pomHeader {
     font-size: 1.5rem !important;
   }
+}
+
+.custom-pomTimer {
+  font-size: 10rem !important;
 }
 
 @media (max-width: 800px) {
@@ -20,9 +42,3 @@
     margin: 4rem 0rem !important;
   }
 }
-
-/* @media (min-width: 1000px) {
-  .custom-pomHeader {
-    font-size: 2.7rem !important;
-  }
-} */

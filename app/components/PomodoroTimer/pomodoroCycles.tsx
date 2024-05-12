@@ -8,7 +8,13 @@ interface PomdoroCyclesProps {
 
 const PomdoroCycles: React.FC<PomdoroCyclesProps> = ({ isBreak, cycles }) => {
   return (
-    <Text mt={4} color={"grey"} fontSize={"1.2rem"} margin={"1.5rem"}>
+    <Text
+      mt={4}
+      color={"grey"}
+      fontSize={"1.2rem"}
+      margin={"1.5rem"}
+      style={{ userSelect: "none", pointerEvents: "none" }}
+    >
       {isBreak ? "Break Mode" : "Work Mode"} | Completed Cycles: {cycles}
     </Text>
   );
