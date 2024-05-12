@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
-import { Text } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
+import "./pomodoro.css";
 
 interface PomodoroTimerDisplayProps {
   localTimer: number;
@@ -13,8 +14,9 @@ const PomodoroTimerDisplay: React.FC<PomodoroTimerDisplayProps> = ({
   const seconds = localTimer % 60;
 
   return (
-    <Text
-      fontSize={["1rem", "1.5rem", "2rem", "2.5rem", "3rem", "10rem"]}
+    <Box
+      className="custom-pomTimer"
+      // fontSize={["1rem", "1.5rem", "2rem", "2.5rem", "3rem", "10rem"]}
       fontWeight="bold"
       color="tomato"
       marginBottom={"12.5rem"}
@@ -23,7 +25,7 @@ const PomodoroTimerDisplay: React.FC<PomodoroTimerDisplayProps> = ({
     >
       {minutes}:{seconds < 10 ? "0" : ""}
       {seconds}
-    </Text>
+    </Box>
   );
 };
 

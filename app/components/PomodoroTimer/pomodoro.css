@@ -8,3 +8,21 @@
   box-shadow: 10px 9px 10px rgba(196, 193, 193, 0.5);
   border-radius: 5%;
 }
+@media (max-width: 800px) {
+  .custom-pomHeader {
+    font-size: 1.5rem !important;
+  }
+}
+
+@media (max-width: 800px) {
+  .custom-pomTimer {
+    font-size: 4rem !important;
+    margin: 4rem 0rem !important;
+  }
+}
+
+/* @media (min-width: 1000px) {
+  .custom-pomHeader {
+    font-size: 2.7rem !important;
+  }
+} */
