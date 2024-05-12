@@ -1,6 +1,7 @@
 # Pomodoro Timer Web Application
 This is a mini Pomodoro web application built with React and Next.js.
-Deployed on Netlify: https://jedpomdoro.netlify.app/
+- Deployed on Netlify: https://jedpomdoro.netlify.app/
+- Demo Video (Note: Timer and Break Times has been fast forwarded for demo): https://www.youtube.com/watch?v=kPjn90XpM-o&ab_channel=JedrekKoh
 
 ## Features
 - Pomodoro Timer: A timer for 25 minutes for focused work sessions.
